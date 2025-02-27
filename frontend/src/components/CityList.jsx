@@ -1,17 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CityCard from "./CityCard";
+import CityCardSkeleton from "./CityCardSkeleton";
 import useCityStore from "../context/useCityStore";
 
 const CityList = () => {
   const { savedCities, getCities } = useCityStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCities();
+    setLoading(true);
+    getCities().finally(() => setLoading(false));
   }, [getCities]);
 
   return (
-    <div className="border-4 border-weather-secondary">
-      {savedCities.length > 0 ? (
+    <div className="border-4 border-[var(--color-weather-secondary)]">
+      {loading ? (
+        [...Array(3)].map((_, index) => <CityCardSkeleton key={index} />)
+      ) : savedCities.length > 0 ? (
         savedCities.map((city) => <CityCard key={city.id} city={city} />)
       ) : (
         <p className="text-center">
