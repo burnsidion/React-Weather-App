@@ -1,2 +1,56 @@
 @import "tailwindcss";
-@plugin "daisyui";
+/* @plugin "daisyui"; */
+
+@layer base {
+  :root {
+    --color-weather-primary: #1d1e22;
+    --color-weather-secondary: #393f4d;
+    --color-weather-city-search: #3f3f3f;
+    --color-ivory: #fff1e7;
+  }
+
+  * {
+    font-family: "Roboto", sans-serif;
+  }
+}
+
+@layer utilities {
+  .bg-weather-primary {
+    background-color: var(--color-weather-primary);
+  }
+  .bg-weather-secondary {
+    background-color: var(--color-weather-secondary);
+  }
+  .bg-weather-city-search {
+    background-color: var(--color-weather-city-search);
+  }
+  .text-ivory-color {
+    color: var(--color-ivory);
+  }
+
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      max-width: 640px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 768px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 768px;
+    }
+  }
+}

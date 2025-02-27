@@ -9,14 +9,13 @@ const HomePage = () => {
 
   return (
     <main className="container text-ivory-color">
-      <div className="nfc-search-input pt-4 mb-5 relative">
+      <div className="pt-4 mb-5 relative">
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search for a city..."
-          className="py-2 px-1 w-full bg-transparent border-b focus:border-weather-secondary 
-          focus:outline-none focus:shadow-[0px_1px_0_0_#004E71] animate-pulse"
+          className="py-2 px-1 w-full bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71] animate-pulse"
         />
 
         {mapboxSearchResults && (
@@ -43,7 +42,7 @@ const HomePage = () => {
           </ul>
         )}
 
-        <h1 className="mt-5 text-center text-2xl">
+        <h1 className="mt-5 text-center text-2xl whitespace-nowrap">
           Your Currently Tracked Cities
         </h1>
       </div>
