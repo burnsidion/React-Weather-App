@@ -1,9 +1,20 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useCityStore from "../context/useCityStore";
 
 const HomePage = () => {
   const { searchResults, searchError, getSearchResults } = useCityStore();
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleCityClick = (searchResult) => {
+    const city = searchResult.properties.context.place.name;
+    const state = searchResult.properties.context.region.name;
+    const lat = searchResult.geometry.coordinates[1];
+    const long = searchResult.geometry.coordinates[0];
+
+    navigate(`/city/${state}/${city}?lat=${lat}&long=${long}&preview=true`);
+  };
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -42,7 +53,7 @@ const HomePage = () => {
                 <li
                   key={searchResult.id}
                   className="py-2 cursor-pointer text-ivory-color"
-                  // Future: onClick={() => previewCity(searchResult)}
+                  onClick={() => handleCityClick(searchResult)}
                 >
                   {searchResult.properties.full_address}
                 </li>
