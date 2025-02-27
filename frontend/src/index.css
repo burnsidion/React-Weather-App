@@ -1,6 +1,40 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+.modal-outer-enter {
+  opacity: 0;
+}
+.modal-outer-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
+}
+.modal-outer-exit {
+  opacity: 1;
+}
+.modal-outer-exit-active {
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
+}
+
+.modal-inner-enter {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.modal-inner-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02) 0.15s;
+}
+.modal-inner-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+.modal-inner-exit-active {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
+}
+
 @layer base {
   :root {
     --color-weather-primary: #1d1e22;

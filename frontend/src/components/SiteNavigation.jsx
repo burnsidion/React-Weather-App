@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 import Modal from "./Modal";
 
 const SiteNavigation = () => {
-  console.log("✅ SiteNavigation is rendering...");
   const [modalActive, setModalActive] = useState(false);
 
   const toggleModal = () => {
@@ -16,7 +18,7 @@ const SiteNavigation = () => {
       <nav className="container flex flex-col sm:flex-row items-center gap-4 text-ivory-color py-6">
         <Link to="/">
           <div className="flex items-center gap-3">
-            <i className="fa-solid fa-sun text-2xl animate-pulse"></i>
+            <FontAwesomeIcon icon={faSun} className="text-2xl animate-pulse" />
             <p className="text-2xl hover:animate-pulse">
               {"What's the Weather?"}
             </p>
@@ -24,10 +26,11 @@ const SiteNavigation = () => {
         </Link>
 
         <div className="flex gap-3 flex-1 justify-end">
-          <i
-            className="fa-solid fa-circle-info text-xl hover:text-weather-secondary duration-150 cursor-pointer"
+          <FontAwesomeIcon
+            icon={faCircleInfo}
+            className="text-xl hover:text-weather-secondary duration-150 cursor-pointer"
             onClick={toggleModal}
-          ></i>
+          />
           {/* We'll implement the add city functionality later */}
         </div>
       </nav>

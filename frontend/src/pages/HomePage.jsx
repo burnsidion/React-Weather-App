@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 // import CityList from "../components/CityList";
 // import CityCardSkeleton from "../components/CityCardSkeleton";
 
@@ -15,7 +16,7 @@ const HomePage = () => {
           value={searchQuery}
           placeholder="Search for a city..."
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="input input-accent border-b w-full focus:border-weather-secondary"
+          className="input input-accent border-b w-full focus:border-weather-secondary animate-pulse"
         />
 
         {mapboxSearchResults && (

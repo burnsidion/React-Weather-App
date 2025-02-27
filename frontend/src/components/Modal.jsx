@@ -1,18 +1,48 @@
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
+import { CSSTransition } from "react-transition-group";
+import { useRef } from "react";
 
 const Modal = ({ isActive, onClose, children }) => {
-  if (!isActive) return null;
+  const nodeRef = useRef(null);
 
   return createPortal(
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-5 rounded-md shadow-lg max-w-screen-md">
-        {children} {}
-        <button className="btn btn-primary mt-4" onClick={onClose}>
-          Close
-        </button>
+    <CSSTransition
+      in={isActive}
+      timeout={300}
+      classNames="modal-outer"
+      unmountOnExit
+      nodeRef={nodeRef}
+    >
+      <div
+        id="modal-overlay"
+        ref={nodeRef}
+        className="fixed inset-0 bg-black/30 flex items-center justify-center"
+        onClick={(event) => {
+          if (event.target.id === "modal-overlay") {
+            onClose();
+          }
+        }}
+      >
+        <CSSTransition
+          in={isActive}
+          timeout={300}
+          classNames="modal-inner"
+          unmountOnExit
+          nodeRef={nodeRef}
+        >
+          <div
+            className="bg-white p-5 rounded-md shadow-lg max-w-screen-md transform transition-all"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {children}
+            <button className="btn btn-primary mt-4" onClick={onClose}>
+              Close
+            </button>
+          </div>
+        </CSSTransition>
       </div>
-    </div>,
+    </CSSTransition>,
     document.body
   );
 };
