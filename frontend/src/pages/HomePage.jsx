@@ -13,9 +13,9 @@ const HomePage = () => {
         <input
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search for a city..."
-          className="py-2 px-1 w-full bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71] animate-pulse"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="input input-accent border-b w-full focus:border-weather-secondary"
         />
 
         {mapboxSearchResults && (
