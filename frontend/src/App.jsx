@@ -1,7 +1,8 @@
-import { BrowserRouter } from "react-router-dom";
-import { CityProvider } from "./context/CityProvider";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import CityPage from "./pages/CityPage";
 import SiteNavigation from "./components/SiteNavigation";
+import { CityProvider } from "./context/CityProvider";
 
 function App() {
   return (
@@ -10,7 +11,10 @@ function App() {
         <div className="flex flex-col min-h-screen font-Roboto bg-weather-primary">
           <SiteNavigation />
           <main className="flex-grow">
-            <HomePage />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/city/:state/:city" element={<CityPage />} />
+            </Routes>
           </main>
         </div>
       </BrowserRouter>

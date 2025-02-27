@@ -49,6 +49,23 @@ export const CityProvider = ({ children }) => {
     }
   }, [weatherUrl]);
 
+  const fetchWeatherData = useCallback(
+    async ({ city, state, lat, lon }) => {
+      try {
+        const response = await axios.get(
+          `${weatherUrl}?q=${encodeURIComponent(
+            JSON.stringify({ city, state, lat, lon })
+          )}`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+        return null;
+      }
+    },
+    [weatherUrl]
+  );
+
   const getSearchResults = useCallback(
     async (query) => {
       if (!query) {
@@ -77,6 +94,7 @@ export const CityProvider = ({ children }) => {
         searchResults,
         searchError,
         getSearchResults,
+        fetchWeatherData,
       }}
     >
       {children}
