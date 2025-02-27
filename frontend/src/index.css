@@ -52,12 +52,15 @@
   .bg-weather-primary {
     background-color: var(--color-weather-primary);
   }
+
   .bg-weather-secondary {
     background-color: var(--color-weather-secondary);
   }
+
   .bg-weather-city-search {
     background-color: var(--color-weather-city-search);
   }
+
   .text-ivory-color {
     color: var(--color-ivory);
   }

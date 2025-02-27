@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useCityStore from "../context/useCityStore";
 
+import CityList from "../components/CityList";
+
 const HomePage = () => {
   const { searchResults, searchError, getSearchResults } = useCityStore();
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,9 +71,7 @@ const HomePage = () => {
 
       {/*Tracked Cities */}
       <div className="flex flex-col gap-4 h-[600px] overflow-y-scroll">
-        {/* <Suspense fallback={<CityCardSkeleton />}>
-          <CityList />
-        </Suspense> */}
+        <CityList />
       </div>
     </main>
   );

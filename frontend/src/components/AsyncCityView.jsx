@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import useCityStore from "../context/useCityStore";
 
+import CityViewSkeleton from "./CityViewSkeleton";
+
 const AsyncCityView = () => {
   const { city, state } = useParams();
   const [searchParams] = useSearchParams();
@@ -30,8 +32,15 @@ const AsyncCityView = () => {
     const getWeather = async () => {
       setLoading(true);
       const data = await fetchWeatherData({ city, state, lat, lon: long });
-      if (data) setWeatherData(processWeatherData(data));
-      setLoading(false);
+
+      if (data) {
+        setTimeout(() => {
+          setWeatherData(processWeatherData(data));
+          setLoading(false);
+        }, 1000);
+      } else {
+        setLoading(false);
+      }
     };
 
     getWeather();
@@ -92,7 +101,7 @@ const AsyncCityView = () => {
     });
   };
 
-  if (loading) return <p>Loading weather data...</p>;
+  if (loading) return <CityViewSkeleton />;
 
   return (
     <div className="flex flex-col flex-1 items-center">

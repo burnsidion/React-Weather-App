@@ -22,8 +22,8 @@ const SiteNavigation = () => {
 
     if (!isPreview) return;
 
-    const city = location.pathname.split("/")[3];
-    const state = location.pathname.split("/")[2];
+    const city = decodeURIComponent(location.pathname.split("/")[3]);
+    const state = decodeURIComponent(location.pathname.split("/")[2]);
     const lat = params.get("lat");
     const long = params.get("long");
 
