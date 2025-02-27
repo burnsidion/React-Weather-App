@@ -57,7 +57,18 @@ export const CityProvider = ({ children }) => {
             JSON.stringify({ city, state, lat, lon })
           )}`
         );
-        return response.data;
+
+        const weather = response.data;
+        const localOffset = new Date().getTimezoneOffset() * 60000;
+        const utc = weather.current.dt * 1000 + localOffset;
+        weather.currentTime = utc + 1000 * weather.timezone_offset;
+
+        weather.hourly.forEach((hour) => {
+          const utcHour = hour.dt * 1000 + localOffset;
+          hour.currentTime = utcHour + 1000 * weather.timezone_offset;
+        });
+
+        return weather;
       } catch (error) {
         console.error("Error fetching weather data:", error);
         return null;
