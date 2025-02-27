@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "frontend": "cd frontend && npm run dev",
-    "backend": "cd backend && node server.js",
+    "backend": "cd backend && node index.js",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\""
   },
   "repository": {
