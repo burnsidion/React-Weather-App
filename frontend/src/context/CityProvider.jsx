@@ -1,17 +1,16 @@
-import { createContext, useState, useEffect, useCallback } from "react";
+import { createContext, useState, useCallback } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
-const CityContext = createContext();
+export const CityContext = createContext();
 
 export const CityProvider = ({ children }) => {
   const [savedCities, setSavedCities] = useState([]);
-
-  CityProvider.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
+  const [searchResults, setSearchResults] = useState(null);
+  const [searchError, setSearchError] = useState(false);
 
   const weatherUrl = `${import.meta.env.VITE_API_URL}/api/weather`;
+  const mapboxUrl = `${import.meta.env.VITE_API_URL}/api/search`;
 
   const getCities = useCallback(async () => {
     const storedCities = localStorage.getItem("savedCities");
@@ -36,7 +35,6 @@ export const CityProvider = ({ children }) => {
         );
 
         const weatherData = await Promise.all(requests);
-
         await new Promise((res) => setTimeout(res, 1000));
 
         const updatedCities = parsedCities.map((city, index) => ({
@@ -51,13 +49,41 @@ export const CityProvider = ({ children }) => {
     }
   }, [weatherUrl]);
 
-  useEffect(() => {
-    getCities();
-  }, [getCities]);
+  const getSearchResults = useCallback(
+    async (query) => {
+      if (!query) {
+        setSearchResults(null);
+        setSearchError(false);
+        return;
+      }
+
+      try {
+        const response = await axios.get(`${mapboxUrl}?q=${query}&types=place`);
+        setSearchResults(response.data.features);
+        setSearchError(false);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+        setSearchError(true);
+      }
+    },
+    [mapboxUrl]
+  );
 
   return (
-    <CityContext.Provider value={{ savedCities, getCities }}>
+    <CityContext.Provider
+      value={{
+        savedCities,
+        getCities,
+        searchResults,
+        searchError,
+        getSearchResults,
+      }}
+    >
       {children}
     </CityContext.Provider>
   );
+};
+
+CityProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
