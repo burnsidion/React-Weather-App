@@ -1,16 +1,56 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun } from "@fortawesome/free-solid-svg-icons";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faSun, faCircleInfo, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { uid } from "uid";
 
 import Modal from "./Modal";
 
 const SiteNavigation = () => {
   const [modalActive, setModalActive] = useState(false);
+  const [savedCities, setSavedCities] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleModal = () => {
     setModalActive(!modalActive);
+  };
+
+  const addCity = () => {
+    const params = new URLSearchParams(location.search);
+    const isPreview = params.get("preview");
+
+    if (!isPreview) return;
+
+    const city = location.pathname.split("/")[3];
+    const state = location.pathname.split("/")[2];
+    const lat = params.get("lat");
+    const long = params.get("long");
+
+    if (!city || !state || !lat || !long) return;
+
+    const storedCities = JSON.parse(localStorage.getItem("savedCities")) || [];
+
+    const cityExists = storedCities.some(
+      (c) => c.city === city && c.state === state
+    );
+
+    if (!cityExists) {
+      const newCity = {
+        id: uid(),
+        city,
+        state,
+        coords: { lat, long },
+      };
+
+      const updatedCities = [...storedCities, newCity];
+      localStorage.setItem("savedCities", JSON.stringify(updatedCities));
+      setSavedCities(updatedCities);
+
+      params.delete("preview");
+      params.set("id", newCity.id);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    }
   };
 
   return (
@@ -31,7 +71,14 @@ const SiteNavigation = () => {
             className="text-xl hover:text-weather-secondary duration-150 cursor-pointer"
             onClick={toggleModal}
           />
-          {/* We'll implement the add city functionality later */}
+          {/* Only show "+" icon when previewing a city */}
+          {new URLSearchParams(location.search).get("preview") && (
+            <FontAwesomeIcon
+              icon={faPlus}
+              className="text-xl hover:text-weather-secondary duration-150 cursor-pointer"
+              onClick={addCity}
+            />
+          )}
         </div>
       </nav>
       <Modal isActive={modalActive} onClose={toggleModal}>
