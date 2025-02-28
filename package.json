@@ -6,7 +6,7 @@
   "scripts": {
     "frontend": "cd frontend && npm run dev",
     "backend": "cd backend && node index.js",
-    "heroku-postbuild": "npm install --prefix backend && npm install --prefix frontend",
+    "heroku-postbuild": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\""
   },
   "repository": {
