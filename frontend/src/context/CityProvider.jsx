@@ -9,8 +9,8 @@ export const CityProvider = ({ children }) => {
   const [searchResults, setSearchResults] = useState(null);
   const [searchError, setSearchError] = useState(false);
 
-  const weatherUrl = `${import.meta.env.VITE_API_URL}/api/weather`;
-  const mapboxUrl = `${import.meta.env.VITE_API_URL}/api/search`;
+  const weatherUrl = `${import.meta.env.VITE_API_BASE_URL}/api/weather`;
+  const mapboxUrl = `${import.meta.env.VITE_API_BASE_URL}/api/search`;
 
   const getCities = useCallback(async () => {
     const storedCities = localStorage.getItem("savedCities");
