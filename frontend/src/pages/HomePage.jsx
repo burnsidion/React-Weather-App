@@ -40,7 +40,7 @@ const HomePage = () => {
         />
 
         {/* Search Results Dropdown */}
-        {searchResults && (
+        {searchResults && searchQuery && (
           <ul className="absolute bg-weather-city-search text-ivory-color w-full shadow-md py-2 px-1 top-[66px]">
             {searchError && (
               <p>{"Sorry, looks like he's dead, Jim. Please try again"}.</p>
