@@ -19,6 +19,7 @@ const AsyncCityView = () => {
   const isPreview = searchParams.get("preview") === "true";
 
   useEffect(() => {
+    document.title = `${city} | Local Weather`;
     if (!isPreview) {
       const isCityTracked = savedCities.some(
         (c) => c.city === city && c.state === state

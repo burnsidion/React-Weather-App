@@ -19,6 +19,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    document.title = "Home | Whats The Weather";
     const delayDebounceFn = setTimeout(() => {
       getSearchResults(searchQuery);
     }, 300);
